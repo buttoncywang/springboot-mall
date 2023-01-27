@@ -1,5 +1,6 @@
 package com.kungiong.springbootmall.rowmapper;
 
+import com.kungiong.springbootmall.constant.ProductCategory;
 import com.kungiong.springbootmall.model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -13,7 +14,10 @@ public class ProductRowMapper implements RowMapper<Product> {
         Product product=new Product();
         product.setProductId(resultSet.getInt("product_id"));
         product.setProductName(resultSet.getString("product_name"));
-        product.setCategory(resultSet.getString("category"));
+        //從資料庫取出的字串，在Enum中找尋對應的值
+        String categoryString=resultSet.getString("category");
+        ProductCategory category=ProductCategory.valueOf(categoryString);
+        product.setCategory(category);
         product.setImageUrl(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
         product.setStock(resultSet.getInt("stock"));
